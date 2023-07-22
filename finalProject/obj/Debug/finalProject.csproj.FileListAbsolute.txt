@@ -1,0 +1,6 @@
+/Users/firengizrustemli/Desktop/finalProject/finalProject/bin/Debug/finalProject.exe
+/Users/firengizrustemli/Desktop/finalProject/finalProject/bin/Debug/finalProject.pdb
+/Users/firengizrustemli/Desktop/finalProject/finalProject/obj/Debug/finalProject.csproj.AssemblyReference.cache
+/Users/firengizrustemli/Desktop/finalProject/finalProject/obj/Debug/finalProject.csproj.CoreCompileInputs.cache
+/Users/firengizrustemli/Desktop/finalProject/finalProject/obj/Debug/finalProject.exe
+/Users/firengizrustemli/Desktop/finalProject/finalProject/obj/Debug/finalProject.pdb
