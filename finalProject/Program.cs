@@ -1,4 +1,5 @@
 ﻿using System;
+using finalProject.Helpers;
 
 namespace finalProject
 {
@@ -34,10 +35,11 @@ namespace finalProject
                 switch (option)
                 {
                     case 1:
+                        SubMenu.ProductsSubMenu();
                        
                         break;
                     case 2:
-                       
+                        SubMenu.SalesSubMenu();
                         break;
                        
                     case 3:

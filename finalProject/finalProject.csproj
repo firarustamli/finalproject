@@ -33,6 +33,13 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Concrete\MenuService.cs" />
+    <Compile Include="Helpers\SubMenu.cs" />
+    <Compile Include="Services\Concrete\MarketService.cs" />
+    <Compile Include="Services\Abstract\IMarketService.cs" />
+    <Compile Include="Data\Models\Product.cs" />
+    <Compile Include="Data\Models\Sales.cs" />
+    <Compile Include="Data\Models\SalesItem.cs" />
+    <Compile Include="Data\Enums\Category.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
@@ -41,6 +48,8 @@
     <Folder Include="Services\Concrete\" />
     <Folder Include="Data\Common\" />
     <Folder Include="Data\Models\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Data\Enums\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
