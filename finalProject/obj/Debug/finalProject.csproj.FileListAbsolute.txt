@@ -4,3 +4,6 @@
 /Users/firengizrustemli/Desktop/finalProject/finalProject/obj/Debug/finalProject.csproj.CoreCompileInputs.cache
 /Users/firengizrustemli/Desktop/finalProject/finalProject/obj/Debug/finalProject.exe
 /Users/firengizrustemli/Desktop/finalProject/finalProject/obj/Debug/finalProject.pdb
+/Users/firengizrustemli/Desktop/finalProject/finalProject/bin/Debug/ConsoleTables.dll
+/Users/firengizrustemli/Desktop/finalProject/finalProject/bin/Debug/ConsoleTables.pdb
+/Users/firengizrustemli/Desktop/finalProject/finalProject/obj/Debug/finalProject.csproj.CopyComplete
