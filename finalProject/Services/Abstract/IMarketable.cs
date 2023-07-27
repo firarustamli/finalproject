@@ -10,7 +10,8 @@ namespace finalProject.Services.Abstract
         List<Product> GetProducts();
         int AddProduct(string name, decimal price, Categories category, int count);
         void ReturnOfProduct(int ID);
-        List<Product> UpdateProduct(int ID);
+        void UpdateProduct(int ID, string name, decimal price, Categories category, int quantity);
+        List<Product> RemoveProduct(int ID);
         List<Product> ShowProductsByCategory(Categories category);
         List<Product> ShowProductsByPriceRanges(decimal minPrice,decimal maxPrice);
         List<Product> FindProductByName(string name);
@@ -24,7 +25,8 @@ namespace finalProject.Services.Abstract
         List<Sales> ShowSalesByExactDate(DateTime date);
         List<Sales> ShowSalesByPriceRanges(decimal minAmount,decimal maxAmount);
         List<Sales> FindSalesByGivenID(int ID);
-        
-
+        List<Sales> RemoveSale(int ID);
+        List<Product> UpdateSale(int ID, string name, decimal price, Categories category, int quantity);
+        List<Sales> RemoveSales(int ID);
     }
 }
