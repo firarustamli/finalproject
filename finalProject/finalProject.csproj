@@ -56,5 +56,8 @@
     <Folder Include="Helpers\" />
     <Folder Include="Data\Enums\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
