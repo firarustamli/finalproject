@@ -12,14 +12,14 @@ namespace finalProject.Services.Concrete
     {
         private List<Product> products;
         private List<Sales> sales;
-        private List<SalesItem> salesItems;
+        private List<SalesItem> salesItem;
 
 
         public MarketService()
         {
             products = new List<Product>();
             sales = new List<Sales>();
-            salesItems = new List<SalesItem>();
+            salesItem = new List<SalesItem>();
             
         }
 
@@ -34,9 +34,29 @@ namespace finalProject.Services.Concrete
             return product.ID;
         }
 
-        public int AddSale(decimal amount, SalesItem salesItem, DateTime date)
+        public int AddSale(int productId,int quantity,DateTime date)
         {
-            throw new NotImplementedException();
+            if (productId < 0) throw new Exception("Product ID can't be less than 0!");
+            if (quantity < 0) ;
+
+            // temp list of saleitems
+
+            var product = products.Find(x => x.ID == productId);
+            if (product == null) throw new Exception("Product not found!");
+
+
+
+            var saleItem = new SalesItem(product, quantity);
+            salesItem.Add(saleItem);
+            var sum = product.Price * quantity;
+            date = DateTime.Now;
+            var sale = new Sales(sum, saleItem, date);
+            sales.Add(sale);
+
+            // axirda create sale and append list of saletimes to new sale
+            return sale.ID;
+
+
         }
 
         public List<Product> FindProductByName(string name)
@@ -58,17 +78,11 @@ namespace finalProject.Services.Concrete
             return products;
         }
 
-       
+
 
         public List<Sales> GetSales()
         {
-            throw new NotImplementedException();
-        }
-
-       
-        public void MenuRemoveSale(int ID)
-        {
-            throw new NotImplementedException();
+            return sales;
         }
 
         public void RemoveProduct(int ID)
@@ -79,19 +93,17 @@ namespace finalProject.Services.Concrete
             products.RemoveAt(ProductIndex); 
         }
 
-        public List<Sales> RemoveSale(int ID)
+        public void RemoveSales(int ID)
         {
-            throw new NotImplementedException();
+            if (ID < 0) throw new Exception("ID can't be less than 0!");
+            int SaleIndex = sales.FindIndex(x => x.ID == ID);
+            if (SaleIndex == -1) throw new Exception("sale not found");
+            products.RemoveAt(SaleIndex);
         }
 
         public void ReturnOfProduct(int ID)
         {
             throw new NotImplementedException();
-        }
-
-        public void ShowProductsByCategory(Categories category)
-        {
-           
         }
 
         public List<Product> ShowProductsByPriceRanges(decimal minPrice, decimal maxPrice)
@@ -113,7 +125,9 @@ namespace finalProject.Services.Concrete
 
         public List<Sales> ShowSalesByPriceRanges(decimal minAmount, decimal maxAmount)
         {
-            throw new NotImplementedException();
+            if (minAmount > maxAmount) throw new Exception("Min amount can't be more than Max amount!");
+
+            return sales.Where(x => x.Amount >= minAmount && x.Amount <= maxAmount).ToList();
         }
 
         public void UpdateProduct(int ID,string name, decimal price, Categories category, int quantity)
@@ -140,17 +154,10 @@ namespace finalProject.Services.Concrete
             throw new NotImplementedException();
         }
 
-        List<Product> IMarketable.RemoveProduct(int ID)
-        {
-            throw new NotImplementedException();
-        }
+       
 
-        List<Sales> IMarketable.RemoveSales(int ID)
-        {
-            throw new NotImplementedException();
-        }
-
-        List<Product> IMarketable.ShowProductsByCategory(Categories category)
+       
+        public List<Product> ShowProductsByCategory(Categories category)
         {
             throw new NotImplementedException();
         }

@@ -1,3 +1,42 @@
 ﻿<Properties StartupConfiguration="{912082A3-4C81-464C-9440-1FF6C30616A6}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="finalProject/Data/Models/Sales.cs">
+    <Files>
+      <File FileName="finalProject/Program.cs" Line="57" Column="1" />
+      <File FileName="finalProject/Services/Concrete/MenuService.cs" Line="221" Column="49" />
+      <File FileName="finalProject/Services/Concrete/MarketService.cs" Line="48" Column="1" />
+      <File FileName="finalProject/Services/Abstract/IMarketable.cs" Line="28" Column="34" />
+      <File FileName="finalProject/Data/Models/SalesItem.cs" Line="15" Column="21" />
+      <File FileName="finalProject/Data/Models/Product.cs" Line="11" Column="74" />
+      <File FileName="finalProject/Helpers/SubMenu.cs" Line="119" Column="48" />
+      <File FileName="finalProject/Data/Models/Sales.cs" Line="26" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="finalProject" expanded="True">
+            <Node name="finalProject" expanded="True">
+              <Node name="Data" expanded="True">
+                <Node name="Models" expanded="True">
+                  <Node name="Sales.cs" selected="True" />
+                </Node>
+              </Node>
+              <Node name="Helpers" expanded="True" />
+              <Node name="Properties" expanded="True" />
+              <Node name="Services" expanded="True">
+                <Node name="Abstract" expanded="True" />
+                <Node name="Concrete" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|anycpu" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.finalProject PreferredExecutionTarget="MonoDevelop.Default" />
 </Properties>

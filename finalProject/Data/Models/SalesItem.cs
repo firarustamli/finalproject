@@ -7,7 +7,7 @@ namespace finalProject.Data.Models
     {
         private static int count = 0;
 
-        public SalesItem(int quantity,Product product)
+        public SalesItem(Product product, int quantity)
         {
             Quantity = quantity;
             Product = product;
@@ -15,6 +15,7 @@ namespace finalProject.Data.Models
             count++;
 
         }
+
         public int Quantity { get; set; }
         public Product Product { get; set; }
         

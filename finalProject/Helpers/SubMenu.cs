@@ -109,7 +109,7 @@ namespace finalProject.Helpers
                 switch (option)
                 {
                     case 1:
-                        MenuService.MenuAddPSale();
+                        MenuService.MenuAddSale();
 
                         break;
                     case 2:

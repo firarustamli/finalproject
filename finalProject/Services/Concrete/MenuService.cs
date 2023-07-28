@@ -4,7 +4,7 @@ using finalProject.Data.Enums;
 
 namespace finalProject.Services.Concrete
 {
-    public class MenuService
+    public class MenuService : MarketService
 
     {
         private static MarketService marketService = new MarketService();
@@ -126,7 +126,7 @@ namespace finalProject.Services.Concrete
 
                 foreach (var product in categories)
                 {
-                    Console.WriteLine($"ID:{product.ID} | Name: {product.Name} | Price: {product.Price} | Quantity: {product.}");
+                    Console.WriteLine($"ID:{product.ID} | Name: {product.Name} | Price: {product.Price} | Quantity: {product.Quantity}");
                 }
 
 
@@ -204,21 +204,17 @@ namespace finalProject.Services.Concrete
         {
             try
             {
-                Console.WriteLine("Enter Product's name, please");
-                string name = Console.ReadLine();
-
+                Console.WriteLine("Enter Product's ID, please");
+                int productId = int.Parse(Console.ReadLine());
+              
                 Console.WriteLine("Enter Product's quantity, please");
                 int quantity = int.Parse(Console.ReadLine());
+                DateTime date = DateTime.Now;
 
-                Console.WriteLine("Enter Product's category, please");
-                Categories category = (Categories)Enum.Parse(typeof(Categories), Console.ReadLine(), true);
+                int newId = marketService.AddSale(productId,quantity,date);
+                Console.WriteLine($"Sale with ID {newId} was created!");
 
 
-                Console.WriteLine("Enter Product's quantity, please");
-                int quantity = int.Parse(Console.ReadLine());
-
-                int newId = marketService.AddProduct(name, price, category, quantity);
-                Console.WriteLine($"Product with ID {newId} was created!");
             }
             catch (Exception ex)
             {
@@ -242,7 +238,10 @@ namespace finalProject.Services.Concrete
         {
             try
             {
-
+                Console.WriteLine("Enter Sale's ID, please");
+                int id = int.Parse(Console.ReadLine());
+                marketService.RemoveSales(id);
+                Console.WriteLine("Sale deleted successfully!");
             }
             catch (Exception ex)
             {
@@ -291,7 +290,24 @@ namespace finalProject.Services.Concrete
         {
             try
             {
+                Console.WriteLine("Enter minimum amount :");
+                decimal minAmount = decimal.Parse(Console.ReadLine());
 
+                Console.WriteLine("Enter maximum amount :");
+                decimal maxAmount = decimal.Parse(Console.ReadLine());
+
+                var foundSales = marketService.ShowSalesByPriceRanges(minAmount, maxAmount);
+
+                if (foundSales.Count == 0)
+                {
+                    Console.WriteLine("No sales found.");
+                    return;
+                }
+
+                foreach (var sale in foundSales)
+                {
+                    Console.WriteLine($"ID: {sale.ID} | SaleItem : {sale.SalesItem} | Date: {sale.Date}");
+                }
             }
             catch (Exception ex)
             {

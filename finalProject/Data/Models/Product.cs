@@ -13,7 +13,7 @@ namespace finalProject.Data.Models
             Name = name;
             Price = price;
             Category = category;
-            Quantity = quantity;
+            Quantity= quantity;
 
             ID = count;
             count++;
