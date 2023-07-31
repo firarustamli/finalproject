@@ -8,21 +8,38 @@ namespace finalProject.Data.Models
     {
         private static int count = 0;
 
-        public Sales(decimal amount, List<SalesItem> salesItem,DateTime date)
+        public Sales(decimal amount, int quantity, DateTime date)
         {
             Amount = amount;
-            List<SalesItem> SalesItem = salesItem;
             Date = date;
+            Quantity = quantity;
+            Items = new List<SalesItem>();
+
             ID = count;
             count++;
 
-           
+
+        }
+
+
+        public Sales(decimal amount, List<SalesItem> items,DateTime date)
+        {
+            Amount = amount;
+            Items = items;
+            Date = date;
+            ID = count;
+            count++;
         }
         public decimal Amount { get; set; }
-        public List<SalesItem> SalesItem { get; set; }
+        public List<SalesItem> Items { get; set; }
         public DateTime Date { get; set; }
+        public int Quantity { get; set; }
 
+        public void AddSaleItem(SalesItem saleitem )
+
+        {
+            Items.Add(saleitem);
+        }
        
-
     }
 }

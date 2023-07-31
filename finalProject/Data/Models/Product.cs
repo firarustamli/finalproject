@@ -14,7 +14,7 @@ namespace finalProject.Data.Models
             Price = price;
             Category = category;
             Quantity= quantity;
-
+            // Sets the ID to a unique value using count and then increment the count.
             ID = count;
             count++;
 

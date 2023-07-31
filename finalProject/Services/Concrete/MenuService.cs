@@ -1,14 +1,17 @@
 ﻿using System;
 using ConsoleTables;
 using finalProject.Data.Enums;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace finalProject.Services.Concrete
 {
-    public class MenuService : MarketService
+    public class MenuService 
 
     {
         private static MarketService marketService = new MarketService();
-        
+
+        // Method to add a new product to the market system
         public static void MenuAddProduct()
         {
             try
@@ -112,31 +115,49 @@ namespace finalProject.Services.Concrete
 
         public static void MenuShowProductsByCategory()
         {
-            try
-            {
-                var categories = marketService.GetProducts();
+             try
+             { 
+                // Gets the list of products
+                var products = marketService.GetProducts();
+
+                // Shows available categories
+                Console.WriteLine("Available categories:");
+
                 foreach (var item in Enum.GetValues(typeof(Categories)))
                 {
                     string Category = Enum.GetName(typeof(Categories), item);
                     Console.WriteLine($"Category: {Category}");
                 }
 
+                // user enters the product's category
+
                 Console.WriteLine("Enter Product's category, please");
                 Categories category = (Categories)Enum.Parse(typeof(Categories), Console.ReadLine(), true);
 
-                foreach (var product in categories)
+                // Filters and shows products of the selected category
+
+                var productsByCategory = products.FindAll(x => x.Category == category);
+
+                if (productsByCategory.Count > 0)
                 {
-                    Console.WriteLine($"ID:{product.ID} | Name: {product.Name} | Price: {product.Price} | Quantity: {product.Quantity}");
+                Console.WriteLine($"Products in the category '{category}':");
+                foreach (var product in productsByCategory)
+                {
+                    Console.WriteLine($"ID: {product.ID}, Name: {product.Name}, Quantity: {product.Quantity}, Price: {product.Price}");
                 }
-
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Oops, error. {ex.Message}");
-            }
-
         }
+                else
+                {
+                    Console.WriteLine($"No products found in the category '{category}'.");
+                }
+    }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Oops, error. {ex.Message}");
+                }
+   
+
+ }
 
         public static void MenuShowProductsByPriceRanges()
         {
@@ -210,8 +231,8 @@ namespace finalProject.Services.Concrete
                 Console.WriteLine("Enter Product's quantity, please");
                 int quantity = int.Parse(Console.ReadLine());
                 DateTime date = DateTime.Now;
-
-                int newId = marketService.AddSale(productId,quantity,date);
+                
+                int newId = marketService.AddSale(productId, quantity, date);
                 Console.WriteLine($"Sale with ID {newId} was created!");
 
 
@@ -226,7 +247,16 @@ namespace finalProject.Services.Concrete
         {
             try
             {
+                Console.WriteLine("Enter Sale's ID, please");
+                int saleID = int.Parse(Console.ReadLine());
 
+                Console.WriteLine("Enter Products's ID, please");
+                int productID = int.Parse(Console.ReadLine());
+
+                Console.WriteLine("Enter Product's quantity, please");
+                int quantity = int.Parse(Console.ReadLine());
+
+                marketService.ReturnOfProduct(saleID, productID, quantity);
             }
             catch (Exception ex)
             {
@@ -239,8 +269,8 @@ namespace finalProject.Services.Concrete
             try
             {
                 Console.WriteLine("Enter Sale's ID, please");
-                int id = int.Parse(Console.ReadLine());
-                marketService.RemoveSales(id);
+                int ID = int.Parse(Console.ReadLine());
+                marketService.RemoveSales(ID);
                 Console.WriteLine("Sale deleted successfully!");
             }
             catch (Exception ex)
@@ -260,11 +290,15 @@ namespace finalProject.Services.Concrete
                     Console.WriteLine("There are no sales");
                     return;
                 }
-                var table = new ConsoleTable("ID", "Amount", "SaleItem", "Date");
+                var table = new ConsoleTable("ID", "Amount", "Product", "Quantity", "Date");
 
                 foreach (var sale in sales)
                 {
-                    table.AddRow(sale.ID, sale.Amount,sale.SalesItem,sale.Date);
+                    foreach (var item in sale.Items)
+                    {
+                        table.AddRow(sale.ID, sale.Amount,item.Product.Name,item.Quantity, sale.Date);
+                        break;
+                    }
                 }
                 table.Write();
             }
@@ -276,10 +310,41 @@ namespace finalProject.Services.Concrete
 
         public static void MenuShowSalesByDateRange()
         {
-            try
-            {
+                try
+                {
+                    Console.WriteLine("Enter minimum date (MM/DD/YYYY):");
+                    if (!DateTime.TryParse(Console.ReadLine(), out DateTime minDate))
+                    {
+                        Console.WriteLine(" Please enter the date in the format MM/DD/YYYY.");
+                        return;
+                    }
 
+                    Console.WriteLine("Enter maximum date (MM/DD/YYYY):");
+                    if (!DateTime.TryParse(Console.ReadLine(), out DateTime maxDate))
+                    {
+                        Console.WriteLine("Please enter the date in the format MM/DD/YYYY.");
+                        return;
+                    }
+
+                    var foundSales = marketService.ShowSalesByDateRange(minDate, maxDate);
+
+                    if (foundSales.Count == 0)
+                    {
+                        Console.WriteLine("Sales not found in the given range.");
+                        return;
+                    }
+
+                    foreach (var sale in foundSales)
+                    {
+                        Console.WriteLine($" Sale Id: {sale.ID} | Amount: {sale.Amount} | Date: {sale.Date}");
+
+                        foreach (var item in sale.Items)
+                        {
+                            Console.WriteLine($" Id: {item.Product.ID} | Product Name: {item.Product.Name} | Quantity: {item.Quantity}");
+                        }
+                    }
             }
+
             catch (Exception ex)
             {
                 Console.WriteLine($"Oops, error. {ex.Message}");
@@ -288,37 +353,73 @@ namespace finalProject.Services.Concrete
 
         public static void MenuShowSalesByPriceRanges()
         {
-            try
+
             {
-                Console.WriteLine("Enter minimum amount :");
-                decimal minAmount = decimal.Parse(Console.ReadLine());
-
-                Console.WriteLine("Enter maximum amount :");
-                decimal maxAmount = decimal.Parse(Console.ReadLine());
-
-                var foundSales = marketService.ShowSalesByPriceRanges(minAmount, maxAmount);
-
-                if (foundSales.Count == 0)
+                try
                 {
-                    Console.WriteLine("No sales found.");
-                    return;
+                    Console.WriteLine("Enter minimum amount:");
+                    decimal minAmount = decimal.Parse(Console.ReadLine());
+
+                    Console.WriteLine("Enter maximum amount:");
+                    decimal maxAmount = decimal.Parse(Console.ReadLine());
+
+                    var foundSales = marketService.ShowSalesByPriceRanges(minAmount, maxAmount);
+
+                    if (foundSales.Count == 0)
+                    {
+                        Console.WriteLine("No sales found.");
+                        return;
+                    }
+
+                    foreach (var sale in foundSales)
+                    {
+                        Console.WriteLine($"Sale ID: {sale.ID} | Date: {sale.Date}");
+
+                        foreach (var saleItem in sale.Items)
+                        {
+                            Console.WriteLine($"   - Product ID: {saleItem.Product.ID}, Name: {saleItem.Product.Name}, Quantity: {saleItem.Quantity}");
+                        }
+                    }
                 }
-
-                foreach (var sale in foundSales)
+                catch (Exception ex)
                 {
-                    Console.WriteLine($"ID: {sale.ID} | SaleItem : {sale.SalesItem} | Date: {sale.Date}");
+                    Console.WriteLine($"Oops, error. {ex.Message}");
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Oops, error. {ex.Message}");
-            }
+        
         }
 
         public static void MenuShowSalesOnGivenDate()
         {
             try
             {
+                Console.WriteLine("Enter the date (MM/DD/YYYY) for which you want to see sales:");
+
+                if (DateTime.TryParse(Console.ReadLine(), out DateTime date))
+                {
+                    var foundSales = marketService.ShowSalesByExactDate(date);
+
+                    if (foundSales.Count == 0)
+                    {
+                        Console.WriteLine("No sales found for the given date.");
+                        return;
+                    }
+                    //shows the details of each sale found for the given date
+                    foreach (var sale in foundSales)
+                    {
+                        Console.WriteLine($"Sale ID: {sale.ID} | Amount: {sale.Amount} | Date: {sale.Date}");
+
+                        // shows the details of each sale item in the sale
+                        foreach (var saleItem in sale.Items)
+                        {
+                            Console.WriteLine($"   - Product ID: {saleItem.Product.ID}, Name: {saleItem.Product.Name}, Quantity: {saleItem.Quantity}");
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid date format. Please enter the date in the format YYYY-MM-DD.");
+                }
 
             }
             catch (Exception ex)
@@ -331,7 +432,26 @@ namespace finalProject.Services.Concrete
         {
             try
             {
+                Console.WriteLine("Enter Sale's ID for search:");
+                int ID = int.Parse(Console.ReadLine());
 
+                var foundSale = marketService.FindSalesByGivenID(ID);
+
+                if (foundSale.Count == 0)
+                {
+                    Console.WriteLine("No sales found.");
+                    return;
+                }
+
+                foreach (var sale in foundSale)
+                {
+                    Console.WriteLine($"Sale ID: {sale.ID} | Amount: {sale.Amount} | Date: {sale.Date}");
+
+                    foreach (var saleItem in sale.Items)
+                    {
+                        Console.WriteLine($"   - Product ID: {saleItem.Product.ID}, Name: {saleItem.Product.Name}, Quantity: {saleItem.Quantity}");
+                    }
+                }
             }
             catch (Exception ex)
             {
