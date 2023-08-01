@@ -39,18 +39,13 @@ namespace finalProject.Services.Concrete
 
             var prd = products.Find(x => x.ID == productId);
 
-            if (quantity <= 0)
-            {
-                Console.WriteLine("Quantity can't be less than 0 or equal to 0 !  ");
-            }
-            else if (prd == null)
-            {
-                Console.WriteLine("Product not found.");
-            }
-            else if (prd.Quantity < quantity)
-            {
-                Console.WriteLine("Not enough product in stock.");
-            }
+            if (quantity <= 0) throw new Exception ("Quantity can't be less than 0 or equal to 0 !  ");
+
+
+            if (prd == null) throw new Exception("Product not found.");
+            if (prd.Quantity < quantity) throw new Exception("Not enough product in stock.");
+         
+            
                 // here new Price(amount) of Sale = product's price * its quantity
                 var price = prd.Price * quantity;
 
@@ -61,14 +56,16 @@ namespace finalProject.Services.Concrete
                 salesItem.Add(saleItem);
                 var sale = new Sales(price, quantity, DateTime.Now);
 
+            {
                 foreach (var item in salesItem)
                 {
-                   sale.AddSaleItem(item);
+                    sale.AddSaleItem(item);
                 }
                 sales.Add(sale);
-            
-                
+
+
                 Console.WriteLine("Product added to the sale.");
+            }
             
             int option;
 

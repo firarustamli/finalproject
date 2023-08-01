@@ -22,6 +22,14 @@ namespace finalProject.Services.Concrete
                 Console.WriteLine("Enter Product's price, please");
                 decimal price = decimal.Parse(Console.ReadLine());
 
+                Console.WriteLine("Available categories:");
+
+                foreach (var item in Enum.GetValues(typeof(Categories)))
+                {
+                    string Category = Enum.GetName(typeof(Categories), item);
+                    Console.WriteLine($"Category: {Category}");
+                }
+
                 Console.WriteLine("Enter Product's category, please");
                 Categories category = (Categories)Enum.Parse(typeof(Categories), Console.ReadLine(), true);
 
@@ -290,13 +298,13 @@ namespace finalProject.Services.Concrete
                     Console.WriteLine("There are no sales");
                     return;
                 }
-                var table = new ConsoleTable("ID", "Amount", "Product", "Quantity", "Date");
+                var table = new ConsoleTable("saleID", "Amount", "Quantity", "Date");
 
                 foreach (var sale in sales)
                 {
                     foreach (var item in sale.Items)
                     {
-                        table.AddRow(sale.ID, sale.Amount,item.Product.Name,item.Quantity, sale.Date);
+                        table.AddRow(sale.ID, sale.Amount,item.Quantity, sale.Date);
                         break;
                     }
                 }
