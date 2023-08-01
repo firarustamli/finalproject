@@ -40,8 +40,6 @@ namespace finalProject.Services.Concrete
             var prd = products.Find(x => x.ID == productId);
 
             if (quantity <= 0) throw new Exception ("Quantity can't be less than 0 or equal to 0 !  ");
-
-
             if (prd == null) throw new Exception("Product not found.");
             if (prd.Quantity < quantity) throw new Exception("Not enough product in stock.");
          
